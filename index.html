@@ -9,11 +9,23 @@
       margin: 0;
       height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      justify-content: space-between; /* top and bottom bars */
       font-family: Arial, sans-serif;
       background: #ffffff;
-      color: #000000;
+    }
+
+    .black-bar {
+      height: 50px;
+      background: black;
+      width: 100%;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
       box-sizing: border-box;
     }
@@ -97,47 +109,51 @@
 </head>
 <body>
 
-  <div class="container">
-    <h1>Great Reconnect</h1>
+  <div class="black-bar"></div>
 
-    <div class="timer">
-      <div class="box">
-        <div id="days" class="number">0</div>
-        <div class="label">Days</div>
+  <div class="content">
+    <div class="container">
+      <h1>Great Reconnect</h1>
+
+      <div class="timer">
+        <div class="box">
+          <div id="days" class="number">0</div>
+          <div class="label">Days</div>
+        </div>
+        <div class="box">
+          <div id="hours" class="number">0</div>
+          <div class="label">Hours</div>
+        </div>
+        <div class="box">
+          <div id="minutes" class="number">0</div>
+          <div class="label">Minutes</div>
+        </div>
+        <div class="box">
+          <div id="seconds" class="number">0</div>
+          <div class="label">Seconds</div>
+        </div>
       </div>
-      <div class="box">
-        <div id="hours" class="number">0</div>
-        <div class="label">Hours</div>
+
+      <div class="subtitle">
+        Please note that when the time expires the internet will be restored
       </div>
-      <div class="box">
-        <div id="minutes" class="number">0</div>
-        <div class="label">Minutes</div>
+
+      <div class="wifi">
+        <svg viewBox="0 0 64 64" width="100%" height="100%">
+          <circle cx="32" cy="56" r="4" fill="black"/>
+          <path d="M8 32c12-12 36-12 48 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M16 40c8-8 24-8 32 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M24 48c4-4 16-4 16 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
       </div>
-      <div class="box">
-        <div id="seconds" class="number">0</div>
-        <div class="label">Seconds</div>
-      </div>
+
+      <div id="done" class="finished" style="display:none;">Time's up!</div>
     </div>
-
-    <div class="subtitle">
-      Please note that when the time expires the internet will be restored
-    </div>
-
-    <!-- Classic WiFi symbol SVG -->
-    <div class="wifi">
-      <svg viewBox="0 0 64 64" width="100%" height="100%">
-        <circle cx="32" cy="56" r="4" fill="black"/>
-        <path d="M8 32c12-12 36-12 48 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <path d="M16 40c8-8 24-8 32 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <path d="M24 48c4-4 16-4 16 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
-      </svg>
-    </div>
-
-    <div id="done" class="finished" style="display:none;">Time's up!</div>
   </div>
 
+  <div class="black-bar"></div>
+
   <script>
-    // 🔧 SET YOUR DURATION HERE
     const d = 3;
     const h = 0;
     const m = 0;
