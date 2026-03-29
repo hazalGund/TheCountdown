@@ -7,12 +7,14 @@
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* top and bottom bars */
+      justify-content: space-between;
       font-family: Arial, sans-serif;
       background: #ffffff;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
 
     .black-bar {
@@ -26,14 +28,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .container {
+      flex-direction: column;
       text-align: center;
-      width: 100%;
-      max-width: 500px;
     }
 
     h1 {
@@ -44,11 +40,14 @@
     .timer {
       display: flex;
       gap: 12px;
-      justify-content: space-between;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
     .box {
       flex: 1;
+      min-width: 60px;
       background: #f5f5f5;
       padding: 15px 10px;
       border-radius: 18px;
@@ -72,7 +71,7 @@
     }
 
     .subtitle {
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: clamp(0.9em, 3vw, 1.1em);
       opacity: 0.7;
       line-height: 1.4;
@@ -82,23 +81,42 @@
       margin-top: 15px;
       width: 50px;
       height: 50px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    .finished {
-      font-size: clamp(2em, 6vw, 3em);
+    /* Flashy Internet Restored pop animation */
+    #done {
+      font-size: clamp(3em, 8vw, 5em);
       font-weight: bold;
+      animation: popFade 1.2s infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes popFade {
+      0%, 100% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); color: #00bfff; text-shadow: 0 0 20px #00ffff; }
+    }
+
+    .message-text {
       margin-top: 20px;
+      font-size: clamp(0.9em, 2.5vw, 1.1em);
+      line-height: 1.6;
+      max-width: 700px;
+      color: #333333;
+    }
+
+    /* Container that shows after countdown ends */
+    #done-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
     }
 
     @media (max-width: 350px) {
       .timer {
-        flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
       }
       .box {
-        flex: 1 1 45%;
+        flex: 1 1 40%;
       }
       .wifi {
         width: 40px;
@@ -112,47 +130,58 @@
   <div class="black-bar"></div>
 
   <div class="content">
-    <div class="container">
-      <h1>Great Reconnect</h1>
+    <h1>Great Reconnect</h1>
 
-      <div class="timer">
-        <div class="box">
-          <div id="days" class="number">0</div>
-          <div class="label">Days</div>
-        </div>
-        <div class="box">
-          <div id="hours" class="number">0</div>
-          <div class="label">Hours</div>
-        </div>
-        <div class="box">
-          <div id="minutes" class="number">0</div>
-          <div class="label">Minutes</div>
-        </div>
-        <div class="box">
-          <div id="seconds" class="number">0</div>
-          <div class="label">Seconds</div>
-        </div>
+    <div class="timer">
+      <div class="box">
+        <div id="days" class="number">0</div>
+        <div class="label">Days</div>
       </div>
-
-      <div class="subtitle">
-        Please note that when the time expires the internet will be restored
+      <div class="box">
+        <div id="hours" class="number">0</div>
+        <div class="label">Hours</div>
       </div>
-
-<div class="wifi">
-  <img src="golden-retriever-tongue-out.jpg" alt="Golden Retriever" width="100%" height="100%">
-</div>
-
-      <div id="done" class="finished" style="display:none;">Time's up!</div>
+      <div class="box">
+        <div id="minutes" class="number">0</div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="box">
+        <div id="seconds" class="number">0</div>
+        <div class="label">Seconds</div>
+      </div>
     </div>
+
+    <div class="subtitle">
+      Please note that when the time expires, the internet will be restored
+    </div>
+
+    <div class="wifi">
+      <svg viewBox="0 0 64 64" width="100%" height="100%">
+        <circle cx="32" cy="56" r="4" fill="black"/>
+        <path d="M8 32c12-12 36-12 48 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M16 40c8-8 24-8 32 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M24 48c4-4 16-4 16 0" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Appears only after countdown ends -->
+    <div id="done-container">
+      <div id="done">Internet Restored</div>
+
+      <div class="message-text">
+        The great reconnect is here, and with it comes the dawn of a new era. Internet access for all which is free from corruption, misinformation and manipulation. Please take the time to enjoy this moment and on behalf of us here at Hyline Ltd, we thank you.
+      </div>
+    </div>
+
   </div>
 
   <div class="black-bar"></div>
 
   <script>
-    const d = 3;
+    const d = 0;
     const h = 0;
     const m = 0;
-    const s = 0;
+    const s = 25;
 
     const duration =
       (d * 24 * 60 * 60 * 1000) +
@@ -170,8 +199,8 @@
         clearInterval(interval);
         document.querySelector(".timer").style.display = "none";
         document.querySelector(".subtitle").style.display = "none";
-        document.querySelector(".wifi").style.display = "none";
-        document.getElementById("done").style.display = "block";
+        document.querySelector(".wifi").style.display = "none"; // hide original
+        document.getElementById("done-container").style.display = "flex"; // show flashy content
         return;
       }
 
